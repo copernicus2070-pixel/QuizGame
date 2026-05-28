@@ -1,122 +1,143 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
-// Base Question class (Encapsulation + Classes/Objects)
-class Question {
+// Base Question class
+abstract class Question {
     private String text;
-    private String answer;
+    private String correctAnswer;
 
-    public Question(String text, String answer) {
+    public Question(String text, String correctAnswer) {
         this.text = text;
-        this.answer = answer;
+        this.correctAnswer = correctAnswer;
     }
 
+    public String getText() {
+        return text;
+    }
 
-    public String getText() { return text; }
-    public String getAnswer() { return answer; }
+    public abstract void displayQuestion();
 
-    // Polymorphism: overridden in subclasses
-    public boolean checkAnswer(String response) {
-        return response.equalsIgnoreCase(answer);
+    public boolean checkAnswer(String answer) {
+        return answer.trim().equalsIgnoreCase(correctAnswer);
     }
 }
 
-// Subclass: Multiple Choice Question (Inheritance + Polymorphism)
+// True/False subclass
+class TrueFalseQuestion extends Question {
+    public TrueFalseQuestion(String text, String correctAnswer) {
+        super(text, correctAnswer);
+    }
+
+    @Override
+    public void displayQuestion() {
+        System.out.println(getText() + " (True/False)");
+    }
+}
+
+// Multiple Choice subclass
 class MultipleChoiceQuestion extends Question {
     private String[] options;
 
-    public MultipleChoiceQuestion(String text, String answer, String[] options) {
-        super(text, answer);
+    public MultipleChoiceQuestion(String text, String[] options, String correctAnswer) {
+        super(text, correctAnswer);
         this.options = options;
     }
 
     @Override
-    public boolean checkAnswer(String response) {
-        return response.equalsIgnoreCase(getAnswer());
-    }
-
-    public void displayOptions() {
+    public void displayQuestion() {
+        System.out.println(getText());
         for (int i = 0; i < options.length; i++) {
-            System.out.println((i+1) + ". " + options[i]);
+            System.out.println((i + 1) + ". " + options[i]);
         }
     }
 }
 
-// Subclass: True/False Question (Inheritance + Polymorphism)
-class TrueFalseQuestion extends Question {
-    public TrueFalseQuestion(String text, String answer) {
-        super(text, answer);
+// Fill-in-the-Blank subclass
+class FillInTheBlankQuestion extends Question {
+    private String correctAnswer;
+
+    public FillInTheBlankQuestion(String text, String correctAnswer) {
+        super(text, correctAnswer);
+        this.correctAnswer = correctAnswer;
     }
 
     @Override
-    public boolean checkAnswer(String response) {
-        return response.equalsIgnoreCase(getAnswer());
+    public void displayQuestion() {
+        System.out.println(getText());
+        System.out.println("Type your answer:");
+    }
+
+    @Override
+    public boolean checkAnswer(String answer) {
+        return answer.trim().equalsIgnoreCase(correctAnswer);
     }
 }
 
-// Main Game Class
+// Main QuizGame program
 public class QuizGame {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        // Demonstrating Objects
-        Question q1 = new MultipleChoiceQuestion(
-            "Which planet is known as the Red Planet?",
-            "Mars",
-            new String[]{"Earth", "Mars", "Jupiter", "Venus"}
-        );
-
-        Question q2 = new TrueFalseQuestion(
-            "The sun rises in the west. (True/False)",
-            "False"
-        );
-        // Fill-in-the-Blank Questions
-        FillInTheBlankQuestion q1 = new FillInTheBlankQuestion(
-            "The capital of Ethiopia is _____.",
-            "Addis Ababa"
-        );
-
-        FillInTheBlankQuestion q2 = new FillInTheBlankQuestion(
-            "Java was originally developed by _____.",
-            "Sun Microsystems"
-        );
-
-        // Add them to the list
-        questions.add(q1);
-        questions.add(q2);
-
-        // Polymorphism: superclass reference to subclass objects
-        Question[] quiz = {q1, q2};
-
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Question> questions = new ArrayList<>();
         int score = 0;
 
-        for (Question q : quiz) {
-            System.out.println("\n" + q.getText());
+        // --- True/False Questions ---
+        questions.add(new TrueFalseQuestion("The Earth is flat.", "False"));
+        questions.add(new TrueFalseQuestion("Water boils at 100°C.", "True"));
+        questions.add(new TrueFalseQuestion("The sun rises in the west.", "False"));
 
-            // Method overloading example: different ways to display questions
-            if (q instanceof MultipleChoiceQuestion) {
-                ((MultipleChoiceQuestion) q).displayOptions();
-                System.out.print("Enter your answer: ");
-                String response = sc.nextLine();
-                if (q.checkAnswer(response)) {
-                    System.out.println("Correct!");
-                    score++;
-                } else {
-                    System.out.println("Wrong!");
-                }
+        // --- Multiple Choice Questions ---
+        questions.add(new MultipleChoiceQuestion(
+            "Which language is used for Android development?",
+            new String[]{"Python", "Java", "C++", "Ruby"},
+            "Java"
+        ));
+
+        questions.add(new MultipleChoiceQuestion(
+            "Which planet is known as the Red Planet?",
+            new String[]{"Earth", "Mars", "Jupiter", "Venus"},
+            "Mars"
+        ));
+
+        questions.add(new MultipleChoiceQuestion(
+            "Who wrote 'Hamlet'?",
+            new String[]{"Charles Dickens", "William Shakespeare", "Mark Twain", "Jane Austen"},
+            "William Shakespeare"
+        ));
+
+        // --- Fill-in-the-Blank Questions ---
+        questions.add(new FillInTheBlankQuestion(
+            "The capital of Ethiopia is _____.",
+            "Addis Ababa"
+        ));
+
+        questions.add(new FillInTheBlankQuestion(
+            "Java was originally developed by _____.",
+            "Sun Microsystems"
+        ));
+
+        questions.add(new FillInTheBlankQuestion(
+            "The chemical symbol for water is _____.",
+            "H2O"
+        ));
+
+        // --- Shuffle questions ---
+        Collections.shuffle(questions);
+
+        // --- Run the quiz ---
+        for (Question q : questions) {
+            q.displayQuestion();
+            String answer = scanner.nextLine();
+            if (q.checkAnswer(answer)) {
+                System.out.println("Correct!\n");
+                score++;
             } else {
-                System.out.print("Enter True/False: ");
-                String response = sc.nextLine();
-                if (q.checkAnswer(response)) {
-                    System.out.println("Correct!");
-                    score++;
-                } else {
-                    System.out.println("Wrong!");
-                }
+                System.out.println("Wrong!\n");
             }
         }
 
-        System.out.println("\nYour final score: " + score + "/" + quiz.length);
-        sc.close();
+        // --- Show final score ---
+        System.out.println("Quiz finished! Your score: " + score + "/" + questions.size());
+        scanner.close();
     }
 }
-
