@@ -10,6 +10,7 @@ class Question {
         this.answer = answer;
     }
 
+
     public String getText() { return text; }
     public String getAnswer() { return answer; }
 
@@ -68,6 +69,20 @@ public class QuizGame {
             "The sun rises in the west. (True/False)",
             "False"
         );
+        // Fill-in-the-Blank Questions
+        FillInTheBlankQuestion q1 = new FillInTheBlankQuestion(
+            "The capital of Ethiopia is _____.",
+            "Addis Ababa"
+        );
+
+        FillInTheBlankQuestion q2 = new FillInTheBlankQuestion(
+            "Java was originally developed by _____.",
+            "Sun Microsystems"
+        );
+
+        // Add them to the list
+        questions.add(q1);
+        questions.add(q2);
 
         // Polymorphism: superclass reference to subclass objects
         Question[] quiz = {q1, q2};
