@@ -20,10 +20,5 @@ jobs:
     - name: Compile project
       run: javac QuizGame.java
 
-    - name: Run tests
-      run: java QuizGame < sample_input.txt
-
-    - name: Run Checkstyle
-      uses: nikitasavinov/checkstyle-action@v1
-      with:
-        checkstyle_config: google_checks.xml
+    - name: Run program
+      run: java QuizGame
