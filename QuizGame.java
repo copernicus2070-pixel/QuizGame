@@ -3,6 +3,8 @@ import java.util.Collections;
 import java.util.Scanner;
 
 // Test change for PR pipeline
+// Added comment to test pipeline
+
 
 // Base Question class
 abstract class Question {
@@ -127,16 +129,25 @@ public class QuizGame {
         Collections.shuffle(questions);
 
         // --- Run the quiz ---
-        for (Question q : questions) {
-            q.displayQuestion();
-            String answer = scanner.nextLine();
-            if (q.checkAnswer(answer)) {
-                System.out.println("Correct!\n");
-                score++;
-            } else {
-                System.out.println("Wrong!\n");
-            }
-        }
+for (Question q : questions) {
+        q.displayQuestion();
+
+    // Start timer before reading input
+    long startTime = System.currentTimeMillis();
+    String answer = scanner.nextLine();
+    long endTime = System.currentTimeMillis();
+
+    // Calculate time taken in seconds
+    long timeTaken = (endTime - startTime) / 1000;
+
+    // Friendly feedback with timer
+    if (q.checkAnswer(answer)) {
+        System.out.println("Correct! 🎉 You answered in " + timeTaken + " seconds.\n");
+        score++;
+    } else {
+        System.out.println("Oops! ❌ The correct answer was not '" + answer + "'. You took " + timeTaken + " seconds.\n");
+    }
+}
 
         // --- Show final score ---
         System.out.println("Quiz finished! Your score: " + score + "/" + questions.size());
