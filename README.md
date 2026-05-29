@@ -53,6 +53,7 @@ Build a graphical user interface (GUI) version
 Developer/Author
 
 Developed by Abel Tilahun — Addis Ababa, Ethiopia
+
 copernicus2070@gmail.com
 
  2026 
