@@ -24,6 +24,6 @@ jobs:
       run: java QuizGame
 
     - name: Run Checkstyle
-      uses: nikitasavinov/checkstyle-action@v1
+      uses: nikitasavinov/checkstyle-action@master
       with:
-        checkstyle_config: google_checks.xml
+          checkstyle_config: google_checks.xml
