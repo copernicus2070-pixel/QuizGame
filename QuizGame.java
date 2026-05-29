@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.Scanner;
 
 // Test change for PR pipeline
-// demo pipeline additional
+// demo change for pull request
 // Base Question class
 
 abstract class Question {
