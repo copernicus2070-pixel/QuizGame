@@ -3,8 +3,6 @@ import java.util.Collections;
 import java.util.Scanner;
 
 // Test change for PR pipeline
-// Added comment to test pipeline
-// Demo change for PR pipeline
 
 
 // Base Question class
