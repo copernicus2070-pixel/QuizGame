@@ -22,3 +22,8 @@ jobs:
 
     - name: Run program
       run: java QuizGame
+
+    - name: Run Checkstyle
+      uses: nikitasavinov/checkstyle-action@v1
+      with:
+        checkstyle_config: google_checks.xml
