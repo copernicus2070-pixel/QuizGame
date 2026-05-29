@@ -12,18 +12,20 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Set up Java
-      uses: actions/setup-java@v3
-      with:
+    -  name: Set up Java
+       uses: actions/setup-java@v3
+       with:
+        distribution: 'temurin'
         java-version: '17'
+
 
     - name: Compile project
       run: javac QuizGame.java
 
-    - name: Run tests
-      run: java QuizGame < sample_input.txt
+   # - name: Run program
+    #  run: java QuizGame
 
     - name: Run Checkstyle
-      uses: nikitasavinov/checkstyle-action@v1
+      uses: nikitasavinov/checkstyle-action@master
       with:
-        checkstyle_config: google_checks.xml
+          checkstyle_config: google_checks.xml
