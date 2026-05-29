@@ -42,6 +42,20 @@ Checks code style with Checkstyle
 
 Provides feedback directly in the Pull Request under the Checks tab
 
+OOP concept covered
+
+Classes & Objects  
+Defined in Question (lines 8–25) and subclasses. Objects created in QuizGame.java (lines 70–110).
+
+Encapsulation  
+Private fields text and correctAnswer in Question (lines 10–11). Accessed via getText() and checkAnswer().
+
+Inheritance  
+Subclasses (TrueFalseQuestion, MultipleChoiceQuestion, FillInTheBlankQuestion) extend Question (line 3 in each file).
+
+Polymorphism  
+displayQuestion() overridden in each subclass. checkAnswer() overloaded in FillInTheBlankQuestion. Loop in QuizGame.java (lines 115–130) uses superclass references for dynamic binding.
+
 Future Enhancements
 
 Save results to a file for history tracking
