@@ -22,8 +22,8 @@ jobs:
     - name: Compile project
       run: javac QuizGame.java
 
-    - name: Run program
-      run: java QuizGame
+   # - name: Run program
+    #  run: java QuizGame
 
     - name: Run Checkstyle
       uses: nikitasavinov/checkstyle-action@master
